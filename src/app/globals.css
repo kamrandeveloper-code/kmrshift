@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
+/* KMR Shift — Legacy Systems. Modern Solutions.
+   Paper & obsidian palette with a single accent. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand: #fd3e08;
+  --brand-hover: #e23505;
+  --brand-foreground: #ffffff;
+
+  --paper: #f4f4f5;
+  --surface: #ffffff;
+  --obsidian: #09090b;
+
+  --foreground: var(--obsidian);
+  --muted: #71717a;
+
+  --rule: rgb(9 9 11 / 0.12);
+  --rule-inverse: rgb(244 244 245 / 0.15);
+
+  --radius: 0.375rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-foreground: var(--brand-foreground);
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-obsidian: var(--obsidian);
+
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+
+  --color-rule: var(--rule);
+  --color-rule-inverse: var(--rule-inverse);
+
+  --radius-xs: 2px;
+  --radius-md: var(--radius);
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --shadow-frame-raised: 0 28px 48px -32px rgb(9 9 11 / 0.35);
+
+  --animate-kmr-rise: kmr-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-kmr-shift-arrow: kmr-shift-arrow 2.4s ease-in-out infinite;
+
+  @keyframes kmr-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes kmr-shift-arrow {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Dot-matrix field, inspired by engineering paper. */
+@utility grid-dots {
+  background-image: radial-gradient(rgb(9 9 11 / 0.14) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@utility grid-dots-inverse {
+  background-image: radial-gradient(
+    rgb(244 244 245 / 0.16) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--rule);
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--brand);
+    color: var(--brand-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
 }
